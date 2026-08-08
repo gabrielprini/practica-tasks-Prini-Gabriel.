@@ -1,0 +1,26 @@
+{
+  "name": "practica-tasks-apellido-nombre",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gabrielprini/practica-tasks-Prini-Gabriel..git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/gabrielprini/practica-tasks-Prini-Gabriel./issues"
+  },
+  "homepage": "https://github.com/gabrielprini/practica-tasks-Prini-Gabriel.#readme",
+  "dependencies": {
+    "express": "^5.2.1",
+    "mysql2": "^3.23.2",
+    "sequelize": "^6.37.8"
+  }
+}
