@@ -1,0 +1,36 @@
+// Estamos trayendo Express, que instalaste con: npm install express, Express nos permite crear nuestro servidor y después agregarle rutas
+import express from "express";
+// Acá estamos trayendo el sequelize que creamos anteriormente en: database
+import sequelize from "./src/config/database.js";
+
+// Acá ejecutamos: express() y guardamos el resultado en app, app va a representar nuestra aplicación de Express.
+const app = express();
+
+// ¿Qué es express.json()? Cuando un usuario manda datos a nuestro servidor, muchas veces los manda en formato JSON.
+// express.json() Es un middleware de Express que lee el JSON que llega en una petición y lo convierte en un objeto de JavaScript.
+// app.use() sirve para decirle a Express: "Usá esto en las peticiones que lleguen al servidor."
+// se puede entender como: "Express, cada vez que recibas una petición, preparate para recibir datos JSON."
+app.use(express.json());
+
+// Acá elegimos el puerto donde va a funcionar nuestro servidor Express. Entonces nuestro servidor va a estar disponible en:
+const PORT = 3000;
+
+// Esta línea le dice a Sequelize: "Intentá conectarte a la base de datos usando la configuración que puse en database.js
+sequelize
+  .authenticate()
+  // Esto significa: "Si la conexión salió bien, hacé esto."
+  .then(() => {
+    console.log("Conecion a mysql exitosa");
+
+    // app.listen() → sirve para poner el servidor a escuchar en un puerto. No comprueba directamente si anda. significa: "arrancá el servidor en el puerto 3000"
+    // Esto significa: "Ahora que comprobamos que MySQL funciona, arrancá nuestro servidor Express."
+    app.listen(PORT, () => {
+      console.log(`Seridor funcionando en http://localhost:${PORT}`);
+    });
+  })
+
+  // Ahora viene el caso contrario, esto significa: "Si ocurrió un error intentando conectarnos, hacé esto."
+  // Entonces si algo sale mal, la terminal te va a mostrar algo parecido a Error al conectar con MySQL: ... Y error contiene la información específica del problema.
+  .catch((error) => {
+    console.error("Error al conectar con mysqul", error);
+  });
