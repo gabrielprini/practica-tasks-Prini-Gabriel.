@@ -3,6 +3,9 @@ import express from "express";
 // Acá estamos trayendo el sequelize que creamos anteriormente en: database
 import sequelize from "./src/config/database.js";
 
+import user from "./src/models/user.js";
+import task from "./src/models/task.js";
+
 // Acá ejecutamos: express() y guardamos el resultado en app, app va a representar nuestra aplicación de Express.
 const app = express();
 
@@ -22,6 +25,14 @@ sequelize
   .then(() => {
     console.log("Conecion a mysql exitosa");
 
+    // async indica que una función va a trabajar con operaciones que pueden tardar y que devuelve una Promesa. 
+    // El return devuelve el resultado de la operación a la cadena de Promesas, permitiendo que el siguiente .then() espere a que termine. 
+    // Si la operación falla, el error puede llegar al .catch().
+    return sequelize.sync();
+  })
+
+  .then(() => {
+    console.log("Tablas creadas correctamente");
     // app.listen() → sirve para poner el servidor a escuchar en un puerto. No comprueba directamente si anda. significa: "arrancá el servidor en el puerto 3000"
     // Esto significa: "Ahora que comprobamos que MySQL funciona, arrancá nuestro servidor Express."
     app.listen(PORT, () => {
