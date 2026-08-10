@@ -5,6 +5,7 @@ import sequelize from "./src/config/database.js";
 
 import user from "./src/models/user.js";
 import task from "./src/models/task.js";
+import router from "./src/routes/userRoutes.js"
 
 // Acá ejecutamos: express() y guardamos el resultado en app, app va a representar nuestra aplicación de Express.
 const app = express();
@@ -14,6 +15,10 @@ const app = express();
 // app.use() sirve para decirle a Express: "Usá esto en las peticiones que lleguen al servidor."
 // se puede entender como: "Express, cada vez que recibas una petición, preparate para recibir datos JSON."
 app.use(express.json());
+
+// es la que conecta las rutas de usuarios con tu aplicación principal.
+// dice: "Todo lo que venga a /api/users, mandalo al router de usuarios."
+app.use("/api/users", router);
 
 // Acá elegimos el puerto donde va a funcionar nuestro servidor Express. Entonces nuestro servidor va a estar disponible en:
 const PORT = 3000;
