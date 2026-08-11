@@ -80,3 +80,35 @@ export const getUserById = async (req, res) => {
     });
   }
 };
+
+export const updateUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, email, password } = req.body;
+
+    const user = await User.findByPk(id);
+
+    if (!user) {
+      return res.status(404).json({
+        message: "Usuario no encontrado"
+      });
+    }
+
+    // user.update significa: "Actualizá este usuario que encontré con estos nuevos datos."
+    // await user.update(...), Significa: "Esperá a que termine de actualizarse el usuario en MySQL antes de continuar."
+    await user.update({
+      name,
+      email,
+      password,
+    });
+
+    res.status(200).json(user);
+
+
+  } catch (error) {
+    res.status(500).json({
+      message: "Error al actualizar el usuario",
+      error: error.message
+    });
+  }
+};
