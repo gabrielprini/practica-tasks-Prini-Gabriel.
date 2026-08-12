@@ -5,7 +5,7 @@ const task = sequelize.define("Task", {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        autoIncremnt: true
+        autoIncrement: true
     },
 
     title: {
@@ -24,7 +24,7 @@ const task = sequelize.define("Task", {
         // Acá estamos diciendo que isComplete va a ser de tipo booleano.
         type: DataTypes.BOOLEAN,
         // Esto significa: "Si no especificamos un valor para isComplete, automáticamente va a ser false
-        defaulValue: false
+        defaultValue: false
     }
 });
 
