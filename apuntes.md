@@ -10,3 +10,8 @@ findByPk() → busca
 create()   → crea
 update()   → actualiza
 destroy()  → elimina
+
+Archivo	              Exporta	                      Por qué
+user.js	               export default user	           Un solo modelo
+task.js	               export default task	           Un solo modelo
+index.js	           export { User, Task }	       Dos modelos juntos
