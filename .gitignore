@@ -1,0 +1,4 @@
+// Este archivo le dice a Git: "estos archivos/carpetas no los subas nunca a GitHub" — 
+por eso es importante crearlo, sobre todo porque tu .env tiene datos sensibles (aunque en tu caso la contraseña esté vacía, es buena práctica igual).
+node_modules
+.env
