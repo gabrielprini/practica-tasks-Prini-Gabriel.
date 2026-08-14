@@ -17,7 +17,7 @@ User.hasMany(Task, { foreignKey: "user_id", as: "tasks" });
 Task.belongsTo(User, { foreignKey: { name:"user_id", allowNull:false }, as: "user" });
 
 
-User.hasOne(personalData, {foreignKey: "user_id", as: "dataPersonal"});
+User.hasOne(PersonalData, {foreignKey: "user_id", as: "dataPersonal"});
 
 PersonalData.belongsTo(User, {foreignKey: "user_id", as: "user"})
 

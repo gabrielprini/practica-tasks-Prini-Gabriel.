@@ -3,10 +3,12 @@ import express from "express";
 // Acá estamos trayendo el sequelize que creamos anteriormente en: database
 import sequelize from "./src/config/database.js";
 
-import user from "./src/models/user.js";
-import task from "./src/models/task.js";
+import { User, Task, PersonalData } from "./src/models/index.js";
+
 import userRouter from "./src/routes/userRoutes.js";
 import taskRouter from "./src/routes/taskRoutes.js";
+import personalDataRouter from "./src/routes/personalDataRoutes.js";
+
 
 // Acá ejecutamos: express() y guardamos el resultado en app, app va a representar nuestra aplicación de Express.
 const app = express();
@@ -22,6 +24,8 @@ app.use(express.json());
 app.use("/api/users", userRouter);
 
 app.use("/api/tasks", taskRouter);
+
+app.use("/api/personaldata", personalDataRouter);
 
 // Acá elegimos el puerto donde va a funcionar nuestro servidor Express. Entonces nuestro servidor va a estar disponible en:
 const PORT = 3000;

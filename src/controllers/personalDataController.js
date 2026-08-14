@@ -29,7 +29,8 @@ export const createPersonalData = async (req, res) => {
     // Si findOne no encontró nada → alreadyExists es null → el if es falso → NO entra, sigue de largo. 
     // return res.status(400)... 
     // Si ya existe, cortamos la ejecución ahí mismo (por eso el return) 
-    // y le devolvemos al usuario un código 400 (Bad Request "tu pedido está mal armado") con un mensaje explicando por qué no se pudo crear.
+    // y le devolvemos al usuario un código 400 (Bad Request "tu pedido está mal armado") 
+    // con un mensaje explicando por qué no se pudo crear.
     if (alreadyExists) {
       return res.status(400).json({
         message: "Este usuario ya tiene datos personales cargados",

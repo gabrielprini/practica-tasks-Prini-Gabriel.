@@ -12,8 +12,6 @@ export const createUser = async (req, res) => {
     // Esta línea puede parecer complicada, pero en realidad es desestructuración.
     const { name, email, password } = req.body;
 
-    const 
-
     //le dice a Sequelize: "Creá un nuevo usuario en la base de datos."
     // Await: "Esperá a que termine de crearse antes de continuar."
     const user = await User.create({
@@ -44,8 +42,8 @@ export const getUsers = async (req, res) => {
     // Esta es la operación nueva. User es nuestro modelo y user.findAll() significa: "Buscá todos los registros de usuarios en la tabla User.",
     // Por ejemplo si en mysql tenemos tres usuarios, vamos a obtener esos tres
     // await: Porque la consulta a MySQL no es instantánea. Estamos diciendo: "Esperá a que MySQL termine de buscar los usuarios."
-    const users = await user.findAll({
-      include: [{Task, as: "tasks"}],
+    const users = await User.findAll({
+      include: [{ model: Task, as: "tasks"}],
     });
 
     // El código: 200 significa: OK / La petición salió correctamente.
