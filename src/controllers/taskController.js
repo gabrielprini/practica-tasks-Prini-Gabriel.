@@ -1,13 +1,32 @@
 import Task from "../models/task.js";
+import { User, Task } from "../models/index.js";
+
 
 export const createTask = async (req, res) => {
   try {
-    const { title, description, isComplete } = req.body;
+    const { title, description, isComplete, userId } = req.body;
+
+    // Validamos que se haya mandado un userId
+    if(!userId) {
+      return res.status(400).json({
+        message: "Debe indicar el usuario dueño de la tarea"
+      })
+    }
+
+     // Verificamos que ese usuario exista realmente antes de crear la tarea
+    const userExists = await User.findByPk(userId);
+
+    if (!userExists) {
+      res.status(404).json({
+        message: "El usuario indicado no existe"
+      });
+    }
 
     const task = await Task.create({
       title,
       description,
       isComplete,
+      user_id: userId
     });
 
     res.status(201).json({
@@ -23,7 +42,17 @@ export const createTask = async (req, res) => {
 
 export const getTasks = async (req, res) => {
   try {
-    const tasks = await Task.findAll();
+    const tasks = await Task.findAll({
+      // include: [ ... ] Esto es lo nuevo. Le estamos diciendo: 
+      // "además de las tareas, traeme también los datos relacionados". 
+      // Es un array ([ ]) porque podrías incluir más de una relación al mismo tiempo (por ejemplo, tareas + usuario + etiquetas), separadas por comas dentro del array.
+      // Sin este include, si consultás una tarea, Sequelize solo te da: id, title, description, isComplete, user_id. 
+      // Vas a ver el user_id (un número, ej: 3), pero no vas a saber quién es ese usuario sin hacer OTRA consulta aparte. 
+      // El include evita eso: en una sola consulta a MySQL, trae la tarea Y el usuario completo (nombre, email, etc.) juntos.
+      // { model: User, as: "user" } Esto es un objeto que le dice a Sequelize DE DÓNDE traer esos datos extra: 
+      // model: User → "el modelo relacionado es User" (tu modelo de usuarios) as: "user" → este es el alias, y es crítico que sea exactamente igual al que pusiste en index.js
+      include: [{model: User, as: "user"}],
+    });
 
     res.status(200).json(tasks);
   } catch (error) {

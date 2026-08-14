@@ -13,7 +13,7 @@ User.hasMany(Task, { foreignKey: "user_id", as: "tasks" });
 // Aca nos esta diciendo que una tarea pertenece a un usuario 
 // Es la misma relación vista desde el otro lado
 // as: "user" → alias para pedir "el usuario de esta tarea" (ej: task.user)
-Task.belongsTo(User, { foreignKey: "user_id", as: "user" });
+Task.belongsTo(User, { foreignKey: { name:"user_id", allowNull:false }, as: "user" });
 
 // Exportamos ambos modelos ya relacionados, para que los controladores
 // los importen desde ACÁ (desde index.js) y no directo desde user.js/task.js.

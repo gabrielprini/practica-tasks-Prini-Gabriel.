@@ -14,7 +14,7 @@ export const createUser = async (req, res) => {
 
     //le dice a Sequelize: "Creá un nuevo usuario en la base de datos."
     // Await: "Esperá a que termine de crearse antes de continuar."
-    const user = await user.create({
+    const user = await User.create({
       // le pasamos los datos
       name,
       email,
