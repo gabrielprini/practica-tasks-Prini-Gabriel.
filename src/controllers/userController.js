@@ -1,5 +1,5 @@
 // Estamos trayendo el modelo que hicimos antes, Ese modelo sabe cómo es nuestra tabla de usuarios: id, name, email, password
-import User from "../models/user.js";
+import { Task, User } from "../models/index.js";
 
 // Acá estamos creando una función llamada: createUser
 // Y hacemos: export cont porque queremos que otros archivos puedan importar esta función.
@@ -11,6 +11,8 @@ export const createUser = async (req, res) => {
   try {
     // Esta línea puede parecer complicada, pero en realidad es desestructuración.
     const { name, email, password } = req.body;
+
+    const 
 
     //le dice a Sequelize: "Creá un nuevo usuario en la base de datos."
     // Await: "Esperá a que termine de crearse antes de continuar."
@@ -42,7 +44,9 @@ export const getUsers = async (req, res) => {
     // Esta es la operación nueva. User es nuestro modelo y user.findAll() significa: "Buscá todos los registros de usuarios en la tabla User.",
     // Por ejemplo si en mysql tenemos tres usuarios, vamos a obtener esos tres
     // await: Porque la consulta a MySQL no es instantánea. Estamos diciendo: "Esperá a que MySQL termine de buscar los usuarios."
-    const users = await user.findAll();
+    const users = await user.findAll({
+      include: [{Task, as: "tasks"}],
+    });
 
     // El código: 200 significa: OK / La petición salió correctamente.
     res.status(200).json(users);

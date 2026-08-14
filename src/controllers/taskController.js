@@ -1,4 +1,3 @@
-import Task from "../models/task.js";
 import { User, Task } from "../models/index.js";
 
 
