@@ -5,22 +5,36 @@
 import User from "./user.js";
 import Task from "./task.js";
 import PersonalData from "./personalData.js";
+import Tag from "./tag.js";
+import TaskTag from "./taskTag.js";
 
-
-// Aca nos esta diciendo que la tala user tiene muchas tareas 
+// Aca nos esta diciendo que la tala user tiene muchas tareas
 // ForeignKey le dice a la tabla de tareas(task) que cree una columna llamada user_id con el alias tasks para despues pedir las tareas de este usuario (ej: user.tasks)
 User.hasMany(Task, { foreignKey: "user_id", as: "tasks" });
 
-// Aca nos esta diciendo que una tarea pertenece a un usuario 
+// Aca nos esta diciendo que una tarea pertenece a un usuario
 // Es la misma relación vista desde el otro lado
 // as: "user" → alias para pedir "el usuario de esta tarea" (ej: task.user)
-Task.belongsTo(User, { foreignKey: { name:"user_id", allowNull:false }, as: "user" });
+Task.belongsTo(User, {
+  foreignKey: { name: "user_id", allowNull: false },
+  as: "user",
+});
 
+User.hasOne(PersonalData, { foreignKey: "user_id", as: "dataPersonal" });
 
-User.hasOne(PersonalData, {foreignKey: "user_id", as: "dataPersonal"});
+PersonalData.belongsTo(User, { foreignKey: "user_id", as: "user" });
 
-PersonalData.belongsTo(User, {foreignKey: "user_id", as: "user"})
+Task.belongsToMany(Tag, {
+  through: TaskTag,
+  foreignKey: "task_id",
+  as: "tags",
+});
+Tag.belongsToMany(Task, {
+  through: TaskTag,
+  foreignKey: "tag_id",
+  as: "tasks",
+});
 
 // Exportamos ambos modelos ya relacionados, para que los controladores
 // los importen desde ACÁ (desde index.js) y no directo desde user.js/task.js.
-export { User, Task, PersonalData };
+export { User, Task, PersonalData, Tag, TaskTag };
