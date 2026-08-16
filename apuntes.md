@@ -43,3 +43,11 @@ taskId tagId
 2 1
 2 2
 2 3
+
+El patrón general para N:M siempre implica estos pasos, aunque el detalle cambia según el caso:
+
+Verificar que exista la entidad "principal" (acá, la Task).
+Conseguir la otra entidad relacionada (acá, el Tag) — ya sea buscándola si existe, o creándola si no.
+Usar el método add...() que Sequelize genera automáticamente, para conectar ambas en la tabla intermedia.
+
+la tabla intermedia no necesita controller ni router porque no es una entidad que el usuario cree o consulte directamente — es una tabla "invisible" que existe solo para que la base de datos pueda guardar la conexión entre una Task y un Tag. Nadie hace un POST /api/tasktags a mano.
