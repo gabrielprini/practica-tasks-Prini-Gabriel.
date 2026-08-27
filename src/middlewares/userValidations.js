@@ -2,7 +2,7 @@
 // param() sirve para validar datos que vienen en la URL
 import { body, param } from "express-validator";
 // lo necesitamos para poder consultar con la base de datos y saber si ya existe el gmail
-import { User } from "../models/index,js";
+import { User } from "../models/index.js";
 
 // creamos una constante que contiene un array. Que adentro de este vamos a ponerle las reglas
 export const createUserValidations = [
@@ -10,7 +10,8 @@ export const createUserValidations = [
   body("name")
     // El campo no puede estar vacío.
     // .withMessage() Esto indica qué mensaje mostrar si la validación anterior falla.
-    .notEmpty.withMessage("el nombre es obligatorio")
+    .notEmpty()
+    .withMessage("el nombre es obligatorio")
     // .isLength({ min: 2 }) indica el numero minimo de caracteres
     .isLength({ min: 2 })
     .withMessage("el nombre debe tener minimo dos caracteres"),
