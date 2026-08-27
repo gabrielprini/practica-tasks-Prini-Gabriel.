@@ -51,3 +51,10 @@ Conseguir la otra entidad relacionada (acá, el Tag) — ya sea buscándola si e
 Usar el método add...() que Sequelize genera automáticamente, para conectar ambas en la tabla intermedia.
 
 la tabla intermedia no necesita controller ni router porque no es una entidad que el usuario cree o consulte directamente — es una tabla "invisible" que existe solo para que la base de datos pueda guardar la conexión entre una Task y un Tag. Nadie hace un POST /api/tasktags a mano.
+
+Diferencia entre isInt() y .custom()
+.isInt({ min: 1 }), comprueba el formato del ID: "¿Es un número entero positivo?"
+Mientras que:
+.custom async (id) => 
+    const user = await User.findByPk(id);
+comprueba si realmente existe: "¿Hay un usuario con este ID en la base de datos?"
