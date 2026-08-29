@@ -1,6 +1,6 @@
 // porque importamos user tambien en las validaciones de task
 import { body, param } from "express-validator";
-import { task, User } from "../models/task";
+import { Task, User } from "../models/index.js";
 
 // aca lo que estamos haciendo es crear una constante para luego importarlo llamada createTaskValidations, estamos llamando al campo titulo de task que contiene un array de validaciones
 // que va a ser obligatorio y va a tener minimo 3 caracteres, con el custom vamos a crear nuestra regla de validaciones que vamos a decir que si ya hay un titulo vamos a poner un error y si no

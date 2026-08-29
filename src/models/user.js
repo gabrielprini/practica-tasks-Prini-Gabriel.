@@ -1,6 +1,6 @@
 // Ahora estamos importando otra herramienta de Sequelize: DataTypes sirve para decir qué tipo de dato va a tener cada columna de nuestra tabla
 // Por ejemplo: DataTypes.INTEGER-Numero entero, DataTypes.STRING-texto
-import { DataTypes } from "Sequelize";
+import { DataTypes } from "sequelize";
 // Acá traemos la conexión que hicimos anteriormente.
 import Sequelize from "../config/database.js";
 
