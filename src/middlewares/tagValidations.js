@@ -4,8 +4,8 @@
 // Y hacemos: const task = await Task.findByPk(taskId);
 // En las validaciones de Tag, estamos creando un Tag a partir de un taskId: 
 // No estamos recibiendo un tagId porque el Tag todavía se está creando o reutilizando.
-import { body } from "express-validator";
-import { Task } from "../models/index.js";
+import { body, param } from "express-validator";
+import { Task, Tag } from "../models/index.js";
 
 export const createTagValidations = [
   body("name")
@@ -24,3 +24,22 @@ export const createTagValidations = [
       return true;
     }),
 ];
+
+export const updateTagValidations = [
+  body("name")
+    .optional()
+    .notEmpty().withMessage("El nombre no puede estar vacío")
+    .isLength({ min: 2 }).withMessage("El nombre tiene que tener máximo 2 caracteres")
+];
+
+export const tagIdValidation = [
+  param("id")
+  .isInt({ min: 1 }).withMessage("El id debe ser un número entero positivo")
+    .custom(async (id) => {
+      const tag = await Tag.findByPk(id);
+      if (!tag) {
+        throw new Error("La etiqueta no existe");
+      }
+      return true;
+    }),
+]

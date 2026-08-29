@@ -1,4 +1,5 @@
 import { Task, Tag } from "../models/index.js";
+import { matchedData } from "express-validator";
 
 export const createTag = async (req, res) => {
   try {
@@ -60,6 +61,55 @@ export const getTags = async (req, res) => {
   } catch (error) {
     res.status(500).json({
       message: "Error al obtener todos los datos",
+      error: error.message,
+    });
+  }
+};
+
+export const updateTag = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const datosValidados = matchedData(req);
+    const tag = await Tag.findByPk(id);
+
+    if (!tag) {
+      return res.status(404).json({
+        message: "La etiqueta no existe",
+      });
+    }
+
+    await tag.update(datosValidados);
+    res.status(200).json({
+      message: "Tags actualizados",
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Error al actualizar la Tag",
+      error: error.message,
+    });
+  }
+};
+
+export const deleteTag = async (req, res ) => {
+  try {
+    const { id } = req.params;
+    const tag = await Tag.findByPk(id)
+
+    if (!tag) {
+      return res.status(404).json({
+        message: "La tag no existe",
+      });
+    }
+
+    await tag.destroy()
+
+    res.status(200).json({
+      message: "tag eliminado correctamente",
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Error al eliminar la tag",
       error: error.message,
     });
   }
