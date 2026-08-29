@@ -58,3 +58,5 @@ Mientras que:
 .custom async (id) => 
     const user = await User.findByPk(id);
 comprueba si realmente existe: "¿Hay un usuario con este ID en la base de datos?"
+
+matchedData(): cuando validás campos con body('name').optional()..., express-validator sabe cuáles campos pasaron la validación. matchedData(req) te devuelve solo esos campos, ya filtrados — descartando automáticamente cualquier otra cosa que el usuario haya mandado en el body que no esté en tus validaciones (por ejemplo, si alguien manda un campo extra isAdmin: true que vos nunca definiste, matchedData() lo ignora, no te llega).
