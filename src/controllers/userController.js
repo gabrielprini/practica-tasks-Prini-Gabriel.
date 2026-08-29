@@ -1,5 +1,6 @@
 // Estamos trayendo el modelo que hicimos antes, Ese modelo sabe cómo es nuestra tabla de usuarios: id, name, email, password
 import { Task, User } from "../models/index.js";
+import { matchedData } from "express-validator";
 
 // Acá estamos creando una función llamada: createUser
 // Y hacemos: export cont porque queremos que otros archivos puedan importar esta función.
@@ -86,7 +87,7 @@ export const getUserById = async (req, res) => {
 export const updateUser = async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, email, password } = req.body;
+    const datosValidados = matchedData(req);
 
     const user = await User.findByPk(id);
 
@@ -98,11 +99,7 @@ export const updateUser = async (req, res) => {
 
     // user.update significa: "Actualizá este usuario que encontré con estos nuevos datos."
     // await user.update(...), Significa: "Esperá a que termine de actualizarse el usuario en MySQL antes de continuar."
-    await user.update({
-      name,
-      email,
-      password,
-    });
+    await user.update(datosValidados)
 
     res.status(200).json(user);
 

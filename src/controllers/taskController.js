@@ -1,4 +1,5 @@
 import { User, Task } from "../models/index.js";
+import { matchedData } from "express-validator";
 
 
 export const createTask = async (req, res) => {
@@ -87,7 +88,7 @@ export const updateTask = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const { title, description, isComplete } = req.body;
+    const datosValidos = matchedData(req);
 
     const taskUpdate = await Task.findByPk(id);
 
@@ -97,11 +98,7 @@ export const updateTask = async (req, res) => {
       });
     }
 
-    await taskUpdate.update({
-      title,
-      description,
-      isComplete,
-    });
+    await taskUpdate.update(datosValidos)
 
     res.status(200).json({
       message: "Tarea Actualizada",
